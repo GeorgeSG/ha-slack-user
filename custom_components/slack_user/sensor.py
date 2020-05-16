@@ -13,9 +13,6 @@ _LOGGER = logging.getLogger(__name__)
 async def async_setup_entry(hass, entry, async_add_entities):
     """Set up Slack User Sensor based on config_entry."""
 
-    _LOGGER.debug("debug huo hui")
-    _LOGGER.error("error hui hui")
-
     token = entry.data.get(CONF_TOKEN)
     name = entry.data.get(CONF_NAME)
 
