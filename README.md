@@ -30,12 +30,26 @@ the + button at the bottom right, and search for "Slack User".
 After setting up a Slack User sensor, you'll have a `sensor.sensor_name` with the following attributes:
 
 ```
-title: "User Title"
-real_name: "User Real Name"
-display_name: "Display Name"
-status_text: "Status text"
-status_emoji: "Status emoji"
-entity_picture: "Slack avatar"
+title: string
+real_name: string
+display_name: string
+status_text: string
+status_emoji: string
+entity_picture: string
+
+# Presence Info
+presence: "online" or "away"
+online: boolean
+auto_away: boolean
+manual_away: boolean
+connection_count: number
+last_activity: timestamp
+
+# DND Info
+dnd_enabled: boolean
+next_dnd_start_ts: timestamp
+next_dnd_end_ts: timestamp
+snooze_enabled: boolean
 ```
 
 ## Meta

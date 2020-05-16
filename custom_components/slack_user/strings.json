@@ -5,13 +5,16 @@
       "user": {
         "title": "Setup Slack User",
         "data": {
+          "id": "Slack User ID (e.g. U0G9QF9C6)",
           "token": "Slack Token",
           "name": "Sensor Name"
         }
       }
     },
     "error": {
-      "connection_error": "Failed to connect."
+      "user_not_found": "User was not found. Check the User ID",
+      "invalid_auth": "Invalid token",
+      "generic_error": "Unable to connect to Slack API"
     },
     "abort": {
       "already_configured": "User is already configured."
