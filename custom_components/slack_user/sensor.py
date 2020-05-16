@@ -70,7 +70,7 @@ class SlackUser(Entity):
         """Retrieve latest state."""
 
         try:
-            user_profile = await self._client.users_profile_get()
+            user_profile = await self._client.users_profile_get(user=self._user_id)
             self._available = True
 
             profile = user_profile.get("profile")
@@ -81,7 +81,7 @@ class SlackUser(Entity):
             self._status_emoji = profile.get("status_emoji")
             self._entity_picture = profile.get("image_original")
 
-            dnd_info = await self._client.dnd_info()
+            dnd_info = await self._client.dnd_info(user=self._user_id)
             self._dnd_enabled = dnd_info.get("dnd_enabled")
             self._next_dnd_start_ts = dnd_info.get("next_dnd_start_ts")
             self._next_dnd_end_ts = dnd_info.get("next_dnd_end_ts")
@@ -103,7 +103,7 @@ class SlackUser(Entity):
     @property
     def unique_id(self):
         """Return a unique ID."""
-        return self._token
+        return self._user_id
 
     @property
     def available(self):
