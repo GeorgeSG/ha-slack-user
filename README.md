@@ -22,7 +22,7 @@ Or, install manually by downloading the `custom_components/slack_user` folder fr
 
 ## Setup
 
-The Slack User component is set up with Config Flow. After installing the integration, go to Configuration -> Integartions, click
+The Slack User component is set up with Config Flow. After installing the integration, go to Configuration -> Integrations, click
 the + button at the bottom right, and search for "Slack User".
 
 The component requires a Slack Member ID (User ID), and API Token.
