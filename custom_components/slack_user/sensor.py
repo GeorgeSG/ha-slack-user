@@ -23,7 +23,7 @@ async def async_setup_entry(hass, entry, async_add_entities):
     try:
         await client.auth_test()
     except SlackApiError:
-        _LOGGER.error("Error setting up Slack Control Entry %s", name)
+        _LOGGER.error("Error setting up Slack User Entry %s", name)
         return False
 
     async_add_entities([SlackUser(client, token, name)], True)
