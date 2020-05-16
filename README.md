@@ -20,12 +20,26 @@ Install through [HACS](https://hacs.xyz/):
 
 Or, install manually by downloading the `custom_components/slack_user` folder from this repo and placing it in your `config/custom_components/` folder.
 
-## Usage
+## Setup
 
-The Slack User component is setup with a Config Flow. After installing it, go to Configuration -> Integartions, click
+The Slack User component is set up with Config Flow. After installing the integration, go to Configuration -> Integartions, click
 the + button at the bottom right, and search for "Slack User".
 
-After setting up a Slack User sensor, you'll have a `sensor.sensor_name` with the following attributes:
+The component requires a Slack Member ID (User ID), and API Token.
+
+### Tokens
+
+If you are using the deprecated [Legacy Tokens](https://api.slack.com/legacy/custom-integrations/legacy-tokens), this should work out of the box.
+
+If you are using a token from a Slack App, it'll need to have access to the following scopes:
+
+- `users.profile:read` - to get general profile information - title, profile, status, etc
+- `users:read` - to get presence information
+- `dnd:read` - to get DND information
+
+## Sensor data
+
+After setting up a Slack User sensor, you'll have a `sensor.name` (with the name you specified during config) with the following attributes:
 
 ```
 title: string
