@@ -8,10 +8,7 @@ from homeassistant.helpers.entity import Entity
 from slack import WebClient
 from slack.errors import SlackApiError
 
-from . import DOMAIN
-
 _LOGGER = logging.getLogger(__name__)
-
 
 async def async_setup_entry(hass, entry, async_add_entities):
     """Set up Slack User Sensor based on config_entry."""
