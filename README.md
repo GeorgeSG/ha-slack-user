@@ -1,9 +1,7 @@
 # Slack User Sensor
 
 [![HACS][hacs-shield]][hacs-link]
-[![Downloads][downloads-shield]][downloads-link]
 [![GitHub Release][releases-shield]][releases-link]
-[![CI][ci-shield]][ci-link]
 [![Project Maintenance][maintenance-shield]][maintenance-link]
 [![License][license-shield]][license-link]
 
@@ -62,12 +60,8 @@ snooze_enabled: boolean
 
 [hacs-shield]: https://img.shields.io/badge/HACS-Custom-orange.svg
 [hacs-link]: https://github.com/custom-components/hacs
-[downloads-shield]: https://img.shields.io/github/downloads/GeorgeSG/ha-slack-user/latest/total?color=brightgreen&logo=github
-[downloads-link]: https://github.com/GeorgeSG/ha-slack-user/releases
 [releases-shield]: https://img.shields.io/github/release/GeorgeSG/ha-slack-user.svg
 [releases-link]: https://github.com/GeorgeSG/ha-slack-user/releases
-[ci-shield]: https://img.shields.io/github/workflow/status/GeorgeSG/ha-slack-user/CI?label=CI&logo=github&
-[ci-link]: https://github.com/GeorgeSG/ha-slack-user/actions?query=workflow%3ACI
 [maintenance-shield]: https://img.shields.io/maintenance/yes/2020.svg
 [maintenance-link]: https://github.com/GeorgeSG/ha-slack-user
 [license-shield]: https://img.shields.io/github/license/GeorgeSG/ha-slack-user?color=brightgreen
