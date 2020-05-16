@@ -1,0 +1,20 @@
+{
+  "title": "Slack User",
+  "config": {
+    "step": {
+      "user": {
+        "title": "Setup Slack User",
+        "data": {
+          "token": "Slack Token",
+          "name": "Sensor Name"
+        }
+      }
+    },
+    "error": {
+      "connection_error": "Failed to connect."
+    },
+    "abort": {
+      "already_configured": "User is already configured."
+    }
+  }
+}
