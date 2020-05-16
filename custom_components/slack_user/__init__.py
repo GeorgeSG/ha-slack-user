@@ -2,7 +2,6 @@
 
 import asyncio
 import voluptuous as vol
-from homeassistant.const import CONF_TOKEN, CONF_USERNAME
 from homeassistant.helpers.typing import HomeAssistantType
 from homeassistant.config_entries import ConfigEntry
 
