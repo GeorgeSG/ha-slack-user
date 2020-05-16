@@ -34,7 +34,7 @@ class FlowHandler(config_entries.ConfigFlow):
         token = user_input[CONF_TOKEN]
         name = user_input[CONF_NAME]
 
-        await self.async_set_unique_id(token)
+        await self.async_set_unique_id(user_id)
         self._abort_if_unique_id_configured()
 
         client = WebClient(
