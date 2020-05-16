@@ -66,7 +66,7 @@ snooze_enabled: boolean
 
 Here's an example:
 
-![Example sensor](https://raw.githubusercontent.com/GeorgeSG/ha-slack-user/master/examples/example.png)
+![Example sensor](https://raw.githubusercontent.com/GeorgeSG/ha-slack-user/master/examples/sensor.png)
 
 ## Meta
 
