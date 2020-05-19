@@ -15,7 +15,7 @@ by a given token.
 Install through [HACS](https://hacs.xyz/):
 
 1. Go to HACS -> Settings.
-1. Enter "https://github.com/GeorgeSG/ha-slack-user/" for _ADD CUSTOM REPOSITORY_ and choose "Integration" for _Category_.
+1. Enter "https://github.com/GeorgeSG/ha-slack-user" for _ADD CUSTOM REPOSITORY_ and choose "Integration" for _Category_.
 1. Click Save.
 
 Or, install manually by downloading the `custom_components/slack_user` folder from this repo and placing it in your `config/custom_components/` folder.
