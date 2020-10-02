@@ -1,0 +1,23 @@
+{
+  "title": "Slack Bruker",
+  "config": {
+    "step": {
+      "user": {
+        "title": "Sett opp Slack Bruker",
+        "data": {
+          "id": "Slack Bruker ID (e.g. U0G9QF9C6)",
+          "token": "Slack Token",
+          "name": "Sensor Navn"
+        }
+      }
+    },
+    "error": {
+      "user_not_found": "Brukeren ble ikke funnet. Sjekk bruker-ID-en",
+      "invalid_auth": "Ugyldig token",
+      "generic_error": "Kan ikke koble til Slack API"
+    },
+    "abort": {
+      "already_configured": "Brukeren er allerede konfigurert."
+    }
+  }
+}
