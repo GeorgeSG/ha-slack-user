@@ -4,10 +4,7 @@
   "config_flow": true,
   "documentation": "https://github.com/GeorgeSG/ha-slack-user",
   "issue_tracker": "https://github.com/GeorgeSG/ha-slack-user/issues",
-  "requirements": [
-    "slackclient==2.5.0"
-  ],
-  "codeowners": [
-    "@GeorgeSG"
-  ]
+  "codeowners": ["@GeorgeSG"],
+  "requirements": ["slackclient==2.5.0"],
+  "version": "0.3.0"
 }

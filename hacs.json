@@ -1,8 +1,6 @@
 {
   "name": "Slack User",
-  "domains": [
-    "sensor"
-  ],
+  "domains": ["sensor"],
   "render_readme": true,
   "iot_class": "Cloud Polling"
 }
