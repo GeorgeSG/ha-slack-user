@@ -80,7 +80,7 @@ Here's an example:
 [hacs-link]: https://github.com/custom-components/hacs
 [releases-shield]: https://img.shields.io/github/release/GeorgeSG/ha-slack-user.svg
 [releases-link]: https://github.com/GeorgeSG/ha-slack-user/releases
-[maintenance-shield]: https://img.shields.io/maintenance/yes/2020.svg
+[maintenance-shield]: https://img.shields.io/maintenance/yes/2021.svg
 [maintenance-link]: https://github.com/GeorgeSG/ha-slack-user
 [license-shield]: https://img.shields.io/github/license/GeorgeSG/ha-slack-user?color=brightgreen
 [license-link]: https://github.com/GeorgeSG/ha-slack-user/blob/master/LICENSE
