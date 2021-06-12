@@ -75,20 +75,20 @@ Here's an example:
 
 Sets the user's slack status.
 
-| Field        | Value                 | Necessity  | Description                                                                                                                                 |
-| ------------ | --------------------- | ---------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
-| entity_id    | `"sensor.slack_user"` | _Required_ | Name(s) of the sensor entities                                                                                                              |
-| status_text  | `"Commuting"`         | _Optional_ | New status. Pass empty string (`""`) to clear. Don't pass anything to keep current status.                                                  |
-| status_emoji | `":car:"`             | _Optional_ | New status emoji. Pass empty string (`""`) to clear. Don't pass anything to keep current emoji. Will throw an error if emoji doesn't exist. |
-| expiration   | `"2021-06-12 15:00:00 | _Optional_ | Expiration date. Must be in format `yyyy-mm-dd hh:mm:ss`                                                                                    |
+| Field        | Value                  | Necessity  | Description                                                                                                                                 |
+| ------------ | ---------------------- | ---------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
+| entity_id    | `sensor.slack_user`    | _Required_ | Name(s) of the sensor entities                                                                                                              |
+| status_text  | `Commuting`            | _Optional_ | New status. Pass empty string (`""`) to clear. Don't pass anything to keep current status.                                                  |
+| status_emoji | `:car:`                | _Optional_ | New status emoji. Pass empty string (`""`) to clear. Don't pass anything to keep current emoji. Will throw an error if emoji doesn't exist. |
+| expiration   | `2021-06-12 15:00:001` | _Optional_ | Expiration date. Must be in format `yyyy-mm-dd hh:mm:ss`                                                                                    |
 
 ### `slack_user.clear_status`
 
 Clears the user's slack status.
 
-| Field     | Value                 | Necessity  | Description                    |
-| --------- | --------------------- | ---------- | ------------------------------ |
-| entity_id | `"sensor.slack_user"` | _Required_ | Name(s) of the sensor entities |
+| Field     | Value               | Necessity  | Description                    |
+| --------- | ------------------- | ---------- | ------------------------------ |
+| entity_id | `sensor.slack_user` | _Required_ | Name(s) of the sensor entities |
 
 ## Meta
 
