@@ -12,17 +12,12 @@ by a given token.
 
 ## Installation
 
-Install through [HACS](https://hacs.xyz/):
-
-1. Go to HACS -> Settings.
-1. Enter "https://github.com/GeorgeSG/ha-slack-user" for _ADD CUSTOM REPOSITORY_ and choose "Integration" for _Category_.
-1. Click Save.
-
+`ha-slack-user` is available through [HACS](https://hacs.xyz/).
 Or, install manually by downloading the `custom_components/slack_user` folder from this repo and placing it in your `config/custom_components/` folder.
 
 ## Setup
 
-The Slack User component is set up with Config Flow. After installing the integration, go to Configuration -> Integrations, click
+`ha-slack-user` is set up with Config Flow. After installing the integration, go to Configuration -> Integrations, click
 the + button at the bottom right, and search for "Slack User".
 
 The component requires a Slack Member ID (User ID), and API Token.
@@ -98,7 +93,7 @@ Clears the user's slack status.
 - [![GitHub][github-icon]][github-link] [GeorgeSG][github-link]
 - [![Twitter][twitter-icon]][twitter-link] [@georgesg92][twitter-link]
 
-[hacs-shield]: https://img.shields.io/badge/HACS-Custom-orange.svg
+[hacs-shield]: https://img.shields.io/badge/HACS-Default-green.svg
 [hacs-link]: https://github.com/custom-components/hacs
 [releases-shield]: https://img.shields.io/github/release/GeorgeSG/ha-slack-user.svg
 [releases-link]: https://github.com/GeorgeSG/ha-slack-user/releases
