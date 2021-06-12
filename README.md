@@ -12,7 +12,8 @@ by a given token.
 
 ## Installation
 
-`ha-slack-user` is available through [HACS](https://hacs.xyz/).
+`ha-slack-user` is available through [HACS](https://hacs.xyz/). Open HACS -> Integrations -> Exlpore & Add repositories and search for "Slack User".
+
 Or, install manually by downloading the `custom_components/slack_user` folder from this repo and placing it in your `config/custom_components/` folder.
 
 ## Setup
