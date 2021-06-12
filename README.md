@@ -34,6 +34,7 @@ If you are using the deprecated [Legacy Tokens](https://api.slack.com/legacy/cus
 If you are using a token from a Slack App, it'll need to have access to the following scopes:
 
 - `users.profile:read` - to get general profile information - title, profile, status, etc
+- `users.profile:write` - to set user status
 - `users:read` - to get presence information
 - `dnd:read` - to get DND information
 
@@ -67,6 +68,26 @@ snooze_enabled: boolean
 Here's an example:
 
 ![Example sensor](https://raw.githubusercontent.com/GeorgeSG/ha-slack-user/master/examples/sensor.png)
+
+## Services
+
+### `slack_user.set_status`
+
+Sets the user's slack status.
+
+| Field        | Value                 | Necessity  | Description                                                                                                                                 |
+| ------------ | --------------------- | ---------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
+| entity_id    | `"sensor.slack_user"` | _Required_ | Name(s) of the sensor entities                                                                                                              |
+| status_text  | `"Commuting"`         | _Optional_ | New status. Pass empty string (`""`) to clear. Don't pass anything to keep current status.                                                  |
+| status_emoji | `":car:"`             | _Optional_ | New status emoji. Pass empty string (`""`) to clear. Don't pass anything to keep current emoji. Will throw an error if emoji doesn't exist. |
+
+### `slack_user.clear_status`
+
+Clears the user's slack status.
+
+| Field     | Value                 | Necessity  | Description                    |
+| --------- | --------------------- | ---------- | ------------------------------ |
+| entity_id | `"sensor.slack_user"` | _Required_ | Name(s) of the sensor entities |
 
 ## Meta
 

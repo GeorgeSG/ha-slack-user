@@ -1,0 +1,17 @@
+set_status:
+  description: Set the user status
+  fields:
+    entity_id:
+      description: Name(s) of the slack user sensor entity
+      example: sensor.ha_user
+    status_text:
+      description: Status text
+    status_emoji:
+      description: Status emoji
+
+clear_status:
+  description: Clear the user status
+  fields:
+    entity_id:
+      description: Name(s) of the slack user sensor entity
+      example: sensor.ha_user

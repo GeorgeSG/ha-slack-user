@@ -1,15 +1,37 @@
 """Slack User Sensor."""
 
 import logging
-
+import voluptuous as vol
 from homeassistant.const import CONF_ID, CONF_TOKEN, CONF_NAME
+from homeassistant.helpers import config_validation as cv, entity_platform
 from homeassistant.helpers.aiohttp_client import async_get_clientsession
 from homeassistant.helpers.entity import Entity
 from slack import WebClient
 from slack.errors import SlackApiError
 
+from . import DOMAIN
+
 _LOGGER = logging.getLogger(__name__)
 
+SERVICE_ATTR_ENTITY_ID = "entity_id"
+
+SERVICE_SET_STATUS = "set_status"
+SERVICE_ATTR_STATUS_TEXT = "status_text"
+SERVICE_ATTR_STATUS_EMOJI = "status_emoji"
+SERVICE_SET_STATUS_SCHEMA = vol.Schema(
+    {
+        vol.Required(SERVICE_ATTR_ENTITY_ID): cv.entity_ids,
+        vol.Optional(SERVICE_ATTR_STATUS_TEXT): cv.string,
+        vol.Optional(SERVICE_ATTR_STATUS_EMOJI): cv.string
+    }
+)
+
+SERVICE_CLEAR_STATUS = "clear_status"
+SERVICE_CLEAR_STATUS_SCHEMA = vol.Schema(
+    {
+        vol.Required(SERVICE_ATTR_ENTITY_ID): cv.entity_ids,
+    }
+)
 
 async def async_setup_entry(hass, entry, async_add_entities):
     """Set up Slack User Sensor based on config_entry."""
@@ -28,7 +50,41 @@ async def async_setup_entry(hass, entry, async_add_entities):
         _LOGGER.error("Error setting up Slack User Entry %s", name)
         return False
 
-    async_add_entities([SlackUser(client, user_id, token, name)], True)
+    slack_user = SlackUser(client, user_id, token, name)
+    async_add_entities([slack_user], True)
+
+    # Setup services
+    platform = entity_platform.async_get_current_platform()
+
+    async def async_service_handler(service_call):
+        """Handle dispatched services."""
+        assert platform is not None
+        entities = await platform.async_extract_from_service(service_call)
+
+        if not entities:
+            return
+
+        if service_call.service == SERVICE_SET_STATUS:
+            status_text = service_call.data.get(SERVICE_ATTR_STATUS_TEXT)
+            status_emoji = service_call.data.get(SERVICE_ATTR_STATUS_EMOJI)
+            [await entity.async_set_status(status_text, status_emoji) for entity in entities]
+
+        elif service_call.service == SERVICE_CLEAR_STATUS:
+            [await entity.async_clear_status() for entity in entities]
+
+    hass.services.async_register(
+        DOMAIN,
+        SERVICE_SET_STATUS,
+        async_service_handler,
+        SERVICE_SET_STATUS_SCHEMA,
+    )
+
+    hass.services.async_register(
+        DOMAIN,
+        SERVICE_CLEAR_STATUS,
+        async_service_handler,
+        SERVICE_CLEAR_STATUS_SCHEMA,
+    )
 
 
 class SlackUser(Entity):
@@ -149,3 +205,22 @@ class SlackUser(Entity):
         }
 
         return {k: v for k, v in attrs.items() if v is not None}
+
+    async def async_set_status(self, status_text = None, status_emoji = None):
+        new_text = self._status_text if status_text == None else status_text
+        new_emoji = self._status_emoji if status_emoji == None else status_emoji
+
+        self._client.api_call(
+            api_method = "users.profile.set",
+            json = {
+                "profile": {
+                    "status_text": new_text,
+                    "status_emoji": new_emoji
+                }
+            }
+        )
+
+        await self.async_update()
+
+    async def async_clear_status(self):
+       await self.async_set_status("", "")
