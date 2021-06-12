@@ -1,5 +1,6 @@
 """Slack User Sensor."""
 
+import datetime
 import logging
 import voluptuous as vol
 from homeassistant.const import CONF_ID, CONF_TOKEN, CONF_NAME
@@ -18,11 +19,13 @@ SERVICE_ATTR_ENTITY_ID = "entity_id"
 SERVICE_SET_STATUS = "set_status"
 SERVICE_ATTR_STATUS_TEXT = "status_text"
 SERVICE_ATTR_STATUS_EMOJI = "status_emoji"
+SERVICE_ATTR_EXPIRATION = "expiration"
 SERVICE_SET_STATUS_SCHEMA = vol.Schema(
     {
         vol.Required(SERVICE_ATTR_ENTITY_ID): cv.entity_ids,
         vol.Optional(SERVICE_ATTR_STATUS_TEXT): cv.string,
-        vol.Optional(SERVICE_ATTR_STATUS_EMOJI): cv.string
+        vol.Optional(SERVICE_ATTR_STATUS_EMOJI): cv.string,
+        vol.Optional(SERVICE_ATTR_EXPIRATION): vol.Or("", cv.datetime)
     }
 )
 
@@ -67,7 +70,8 @@ async def async_setup_entry(hass, entry, async_add_entities):
         if service_call.service == SERVICE_SET_STATUS:
             status_text = service_call.data.get(SERVICE_ATTR_STATUS_TEXT)
             status_emoji = service_call.data.get(SERVICE_ATTR_STATUS_EMOJI)
-            [await entity.async_set_status(status_text, status_emoji) for entity in entities]
+            expiration = service_call.data.get(SERVICE_ATTR_EXPIRATION)
+            [await entity.async_set_status(status_text, status_emoji, expiration) for entity in entities]
 
         elif service_call.service == SERVICE_CLEAR_STATUS:
             [await entity.async_clear_status() for entity in entities]
@@ -206,16 +210,22 @@ class SlackUser(Entity):
 
         return {k: v for k, v in attrs.items() if v is not None}
 
-    async def async_set_status(self, status_text = None, status_emoji = None):
+    async def async_set_status(self, status_text = None, status_emoji = None, expiration = None):
         new_text = self._status_text if status_text == None else status_text
         new_emoji = self._status_emoji if status_emoji == None else status_emoji
+
+        if expiration == "" or expiration == None:
+            expiration_ts = expiration
+        else:
+            expiration_ts = int(datetime.datetime.timestamp(expiration))
 
         self._client.api_call(
             api_method = "users.profile.set",
             json = {
                 "profile": {
                     "status_text": new_text,
-                    "status_emoji": new_emoji
+                    "status_emoji": new_emoji,
+                    "status_expiration": expiration_ts
                 }
             }
         )
@@ -223,4 +233,4 @@ class SlackUser(Entity):
         await self.async_update()
 
     async def async_clear_status(self):
-       await self.async_set_status("", "")
+       await self.async_set_status("", "", "")

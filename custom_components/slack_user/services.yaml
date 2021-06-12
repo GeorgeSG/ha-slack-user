@@ -2,16 +2,42 @@ set_status:
   description: Set the user status
   fields:
     entity_id:
+      name: entity_id
+      required: true
       description: Name(s) of the slack user sensor entity
       example: sensor.ha_user
+      selector:
+        entity:
+          integration: slack_user
+          domain: sensor
     status_text:
+      name: Status text
       description: Status text
+      example: "Commuting..."
+      selector:
+        text:
     status_emoji:
+      name: Status emoji
       description: Status emoji
+      example: ":car:"
+      selector:
+        text:
+    expiration:
+      name: Expiration
+      description: Expiration date and time
+      example: "2021-06-12 15:00:00"
+      selector:
+        text:
 
 clear_status:
   description: Clear the user status
   fields:
     entity_id:
+      name: entity_id
+      required: true
       description: Name(s) of the slack user sensor entity
       example: sensor.ha_user
+      selector:
+        entity:
+          integration: slack_user
+          domain: sensor
