@@ -95,10 +95,10 @@ Clears the user's slack status.
 - [![Twitter][twitter-icon]][twitter-link] [@georgesg92][twitter-link]
 
 [hacs-shield]: https://img.shields.io/badge/HACS-Default-green.svg
-[hacs-link]: https://github.com/custom-components/hacs
+[hacs-link]: https://github.com/hacs/integration
 [releases-shield]: https://img.shields.io/github/release/GeorgeSG/ha-slack-user.svg
 [releases-link]: https://github.com/GeorgeSG/ha-slack-user/releases
-[maintenance-shield]: https://img.shields.io/maintenance/yes/2021.svg
+[maintenance-shield]: https://img.shields.io/maintenance/yes/2022.svg
 [maintenance-link]: https://github.com/GeorgeSG/ha-slack-user
 [license-shield]: https://img.shields.io/github/license/GeorgeSG/ha-slack-user?color=brightgreen
 [license-link]: https://github.com/GeorgeSG/ha-slack-user/blob/master/LICENSE
