@@ -41,3 +41,57 @@ clear_status:
         entity:
           integration: slack_user
           domain: sensor
+
+set_presence:
+  description: Set the user's presence
+  fields:
+    entity_id:
+      name: entity_id
+      required: true
+      description: Name(s) of the slack user sensor entity
+      example: sensor.ha_user
+      selector:
+        entity:
+          integration: slack_user
+          domain: sensor
+    presence:
+      name: Presence
+      description: auto or away
+      example: auto
+      selector:
+        select:
+          options:
+            - "auto"
+            - "away"
+
+set_dnd:
+  description: Set DND
+  fields:
+    entity_id:
+      name: entity_id
+      required: true
+      description: Name(s) of the slack user sensor entity
+      example: sensor.ha_user
+      selector:
+        entity:
+          integration: slack_user
+    num_minutes:
+      name: Number of minutes
+      description: Number of minutes for the dnd to be valid
+      example: "30"
+      selector:
+        number:
+          min: 0
+          max: 43800
+
+end_dnd:
+  description: End DND
+  fields:
+    entity_id:
+      name: entity_id
+      required: true
+      description: Name(s) of the slack user sensor entity
+      example: sensor.ha_user
+      selector:
+        entity:
+          integration: slack_user

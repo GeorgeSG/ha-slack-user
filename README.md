@@ -32,7 +32,9 @@ If you are using a token from a Slack App, it'll need to have access to the foll
 - `users.profile:read` - to get general profile information - title, profile, status, etc
 - `users.profile:write` - to set user status
 - `users:read` - to get presence information
+- `users:write` - to be able to set presence
 - `dnd:read` - to get DND information
+- `dnd:write` to set DND status
 
 ## Sensor data
 
@@ -43,8 +45,15 @@ title: string
 real_name: string
 display_name: string
 status_text: string
+status_expiration_ts: number
 status_emoji: string
+status_emoji_display_info:
+  emoji_name: string
+  display_url: string
+  unicode: string
 entity_picture: string
+huddle_state: string
+huddle_state_expiration_ts: number
 
 # Presence Info
 presence: "online" or "away"
@@ -69,6 +78,9 @@ Here's an example:
 
 ### `slack_user.set_status`
 
+Required API scope: [users.profile:write](https://api.slack.com/scopes/users.profile:write)
+API Method: [users.profle.set](https://api.slack.com/methods/users.profile.set)
+
 Sets the user's slack status.
 
 | Field        | Value                  | Necessity  | Description                                                                                                                                 |
@@ -80,7 +92,45 @@ Sets the user's slack status.
 
 ### `slack_user.clear_status`
 
+Required API scope: [users.profile:write](https://api.slack.com/scopes/users.profile:write)
+API Method: [users.profle.set](https://api.slack.com/methods/users.profile.set)
+
 Clears the user's slack status.
+
+| Field     | Value               | Necessity  | Description                    |
+| --------- | ------------------- | ---------- | ------------------------------ |
+| entity_id | `sensor.slack_user` | _Required_ | Name(s) of the sensor entities |
+
+### `slack_user.set_presence`
+
+Required API scope: [users:write](https://api.slack.com/scopes/users:write)
+API Method: [users.setPresence](https://api.slack.com/methods/users.setPresence)
+
+Updates the user's presence.
+
+| Field     | Value               | Necessity  | Description                    |
+| --------- | ------------------- | ---------- | ------------------------------ |
+| entity_id | `sensor.slack_user` | _Required_ | Name(s) of the sensor entities |
+| presence  | `auto` or `away`    | _Required_ | New presence                   |
+
+### `slack_user.set_dnd`
+
+Required API scope: [dnd:write](https://api.slack.com/scopes/dnd:write)
+API Method: [dnd.setSnooze](https://api.slack.com/methods/dnd.setSnooze)
+
+Enables DND for the user.
+
+| Field       | Value               | Necessity  | Description                    |
+| ----------- | ------------------- | ---------- | ------------------------------ |
+| entity_id   | `sensor.slack_user` | _Required_ | Name(s) of the sensor entities |
+| num_minutes | number              | _Required_ | Number of minutes to be in DND |
+
+### `slack_user.end_dnd`
+
+Required API scope: [dnd:write](https://api.slack.com/scopes/dnd:write)
+API Method: [dnd.endSnooze](https://api.slack.com/methods/dnd.endSnooze)
+
+Disables DND for the user.
 
 | Field     | Value               | Necessity  | Description                    |
 | --------- | ------------------- | ---------- | ------------------------------ |
