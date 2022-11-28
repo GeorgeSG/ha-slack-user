@@ -1,0 +1,8 @@
+title: Home
+views:
+  - title: dev
+    path: dev
+    cards:
+      - type: entities
+        entities:
+          - sensor.slack

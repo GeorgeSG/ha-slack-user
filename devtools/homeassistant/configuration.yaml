@@ -1,0 +1,15 @@
+# Configure a default setup of Home Assistant (frontend, api, etc)
+default_config:
+
+logger:
+  default: warning
+
+lovelace:
+  mode: yaml
+  dashboards:
+    lovelace-home:
+      mode: yaml
+      title: Home
+      icon: mdi:home
+      show_in_sidebar: true
+      filename: ui-lovelace.yaml
