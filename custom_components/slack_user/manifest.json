@@ -5,6 +5,6 @@
   "documentation": "https://github.com/GeorgeSG/ha-slack-user",
   "issue_tracker": "https://github.com/GeorgeSG/ha-slack-user/issues",
   "codeowners": ["@GeorgeSG"],
-  "requirements": ["slackclient==2.5.0"],
+  "requirements": ["slackclient==2.9.4"],
   "version": "0.4.1"
 }
