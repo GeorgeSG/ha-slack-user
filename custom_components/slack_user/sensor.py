@@ -36,6 +36,32 @@ SERVICE_CLEAR_STATUS_SCHEMA = vol.Schema(
     }
 )
 
+SERVICE_SET_PRESENCE = "set_presence"
+SERVICE_ATTR_PRESENCE = "presence"
+SERVICE_SET_PRESENCE_SCHEMA = vol.Schema(
+    {
+        vol.Required(SERVICE_ATTR_ENTITY_ID): cv.entity_ids,
+        vol.Required(SERVICE_ATTR_PRESENCE): vol.In(['away', 'auto'])
+    }
+)
+
+SERVICE_SET_DND = "set_dnd"
+SERVICE_ATTR_NUM_MINUTES = "num_minutes"
+SERVICE_SET_DND_SCHEMA = vol.Schema(
+    {
+        vol.Required(SERVICE_ATTR_ENTITY_ID): cv.entity_ids,
+        vol.Required(SERVICE_ATTR_NUM_MINUTES): cv.positive_int
+    }
+)
+
+SERVICE_END_DND = "end_dnd"
+SERVICE_END_DND_SCHEMA = vol.Schema(
+    {
+        vol.Required(SERVICE_ATTR_ENTITY_ID): cv.entity_ids,
+    }
+)
+
+
 async def async_setup_entry(hass, entry, async_add_entities):
     """Set up Slack User Sensor based on config_entry."""
 
@@ -76,6 +102,18 @@ async def async_setup_entry(hass, entry, async_add_entities):
         elif service_call.service == SERVICE_CLEAR_STATUS:
             [await entity.async_clear_status() for entity in entities]
 
+        elif service_call.service == SERVICE_SET_PRESENCE:
+            presence = service_call.data.get(SERVICE_ATTR_PRESENCE)
+            [await entity.async_set_presence(presence) for entity in entities]
+
+        elif service_call.service == SERVICE_SET_DND:
+            num_minutes = service_call.data.get(SERVICE_ATTR_NUM_MINUTES)
+            [await entity.async_set_dnd(num_minutes) for entity in entities]
+
+        elif service_call.service == SERVICE_END_DND:
+            [await entity.async_end_dnd() for entity in entities]
+
+
     hass.services.async_register(
         DOMAIN,
         SERVICE_SET_STATUS,
@@ -88,6 +126,28 @@ async def async_setup_entry(hass, entry, async_add_entities):
         SERVICE_CLEAR_STATUS,
         async_service_handler,
         SERVICE_CLEAR_STATUS_SCHEMA,
+    )
+
+
+    hass.services.async_register(
+        DOMAIN,
+        SERVICE_SET_PRESENCE,
+        async_service_handler,
+        SERVICE_SET_PRESENCE_SCHEMA,
+    )
+
+    hass.services.async_register(
+        DOMAIN,
+        SERVICE_SET_DND,
+        async_service_handler,
+        SERVICE_SET_DND_SCHEMA,
+    )
+
+    hass.services.async_register(
+        DOMAIN,
+        SERVICE_END_DND,
+        async_service_handler,
+        SERVICE_END_DND_SCHEMA,
     )
 
 
@@ -109,8 +169,14 @@ class SlackUser(Entity):
         self._real_name = None
         self._display_name = None
         self._status_text = None
+        self._status_expiration_ts = None
         self._status_emoji = None
+        self._status_emoji_display_info = None
         self._entity_picture = None
+
+        # Huddle info
+        self._huddle_state = None
+        self.huddle_state_expiration_ts = None
 
         # Presence Info
         self._presence = None
@@ -137,9 +203,16 @@ class SlackUser(Entity):
             self._title = profile.get("title")
             self._real_name = profile.get("real_name")
             self._display_name = profile.get("display_name")
+
             self._status_text = profile.get("status_text")
+            self._status_expiration_ts = profile.get("status_expiration")
             self._status_emoji = profile.get("status_emoji")
             self._entity_picture = profile.get("image_original")
+            self._huddle_state = profile.get("huddle_state");
+            self._huddle_state_expiration_ts = profile.get("huddle_state_expiration_ts")
+
+            if len(profile.get("status_emoji_display_info")) > 0:
+                self._status_emoji_display_info = profile.get("status_emoji_display_info")[0]
 
             dnd_info = await self._client.dnd_info(user=self._user_id)
             self._dnd_enabled = dnd_info.get("dnd_enabled")
@@ -194,8 +267,12 @@ class SlackUser(Entity):
             "real_name": self._real_name,
             "display_name": self._display_name,
             "status_text": self._status_text,
+            "status_expiration_ts": self._status_expiration_ts,
             "status_emoji": self._status_emoji,
+            "status_emoji_display_info": self._status_emoji_display_info,
             "entity_picture": self._entity_picture,
+            "huddle_state": self._huddle_state,
+            "huddle_state_expiration_ts": self._huddle_state_expiration_ts,
             "presence": self._presence,
             "online": self._online,
             "auto_away": self._auto_away,
@@ -219,14 +296,11 @@ class SlackUser(Entity):
         else:
             expiration_ts = int(datetime.datetime.timestamp(expiration))
 
-        self._client.api_call(
-            api_method = "users.profile.set",
-            json = {
-                "profile": {
-                    "status_text": new_text,
-                    "status_emoji": new_emoji,
-                    "status_expiration": expiration_ts
-                }
+        self._client.users_profile_set(
+            profile = {
+                "status_text": new_text,
+                "status_emoji": new_emoji,
+                "status_expiration": expiration_ts
             }
         )
 
@@ -234,3 +308,15 @@ class SlackUser(Entity):
 
     async def async_clear_status(self):
        await self.async_set_status("", "", "")
+
+    async def async_set_presence(self, presence):
+        self._client.users_setPresence(presence = presence)
+        await self.async_update()
+
+    async def async_set_dnd(self, num_minutes):
+        self._client.dnd_setSnooze(num_minutes = num_minutes)
+        await self.async_update()
+
+    async def async_end_dnd(self):
+        self._client.dnd_endDnd()
+        await self.async_update()
