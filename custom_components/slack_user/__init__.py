@@ -11,9 +11,6 @@ async def async_setup(hass, config):
 
 async def async_setup_entry(hass, entry):
     """Set up Slack User Entry."""
-    for component in COMPONENT_TYPES:
-        hass.async_create_task(
-            await hass.config_entries.async_forward_entry_setup(entry, component)
-        )
+    await hass.config_entries.async_forward_entry_setups(entry, COMPONENT_TYPES)
 
     return True
